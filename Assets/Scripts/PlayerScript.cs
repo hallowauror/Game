@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class PlayerScript : MonoBehaviour
     public Color colorPink;
     public Color colorUngu;
 
+    public static int score = 0;
+    public Text scoreText;
+
+    public GameObject[] circle;
+    public GameObject colorChanger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,20 +37,39 @@ public class PlayerScript : MonoBehaviour
         {
             rb.velocity = Vector2.up * jump;
         }
+
+        scoreText.text = score.ToString();
+
     }
 
     void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.tag != currentColor)
+    {        
+
+        if(col.tag == "coin")
         {
-            Debug.Log("Game Over!");
+            score++;
+            Destroy(col.gameObject);
+            int randomNumber = Random.Range(0, 2);
+            if(randomNumber == 0)
+                Instantiate(circle[0], new Vector2(transform.position.x, transform.position.y + 11f), transform.rotation);
+            else 
+                Instantiate(circle[1], new Vector2(transform.position.x, transform.position.y + 8f), transform.rotation);
+            return;
         }
 
         if(col.tag == "colorChanger")
         {
             SetRandomColor();
             Destroy(col.gameObject);
+            Instantiate(colorChanger, new Vector2(transform.position.x, transform.position.y + 11f), transform.rotation);
             return; 
+        }
+
+        if(col.tag != currentColor)
+        {
+            Debug.Log("Game Over!");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            score = 0;
         }
     }
 
