@@ -11,15 +11,21 @@ public class GameManager : MonoBehaviour
 	public GameStatus gamestatus;
 	public bool GameOver;
     public Text scoreText;
+    public Text HighScore;
+    public int highScore;
     public Text TextGameOver;
 
     public GameObject gameOverPanel;
     // Start is called before the first frame update
+
+    string HIGHSCORE = "High Score";
+
     void Start()
     {
         instance = this;
         gamestatus = GameStatus.Wait;
         score = 0;   
+        highScore = PlayerPrefs.GetInt(HIGHSCORE,0);
     }
 
     // Update is called once per frame
@@ -34,6 +40,12 @@ public class GameManager : MonoBehaviour
                 gameOverPanel.SetActive(true);
 				GameOver = true;
                 TextGameOver.text = "Score : " + score;
+                if(score > highScore){
+                    PlayerPrefs.SetInt(HIGHSCORE,score);
+                    highScore = score;
+                }
+                HighScore.text = "High Score : " + highScore;
+
 			    break;
 		}
     }
