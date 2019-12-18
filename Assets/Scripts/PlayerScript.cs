@@ -18,7 +18,12 @@ public class PlayerScript : MonoBehaviour
     public Color colorPink;
     public Color colorUngu;
 
+<<<<<<< HEAD
    
+=======
+    public static int score = 0;
+    public Text scoreText;
+>>>>>>> c5202ac07c85772808ccbcc188ea13625b66528f
 
     public GameObject[] circle;
     public GameObject colorChanger;
@@ -26,13 +31,17 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< HEAD
         rb = GetComponent<Rigidbody2D>();
+=======
+>>>>>>> c5202ac07c85772808ccbcc188ea13625b66528f
         SetRandomColor();
     }
 
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         if (GameManager.instance.gamestatus == GameManager.GameStatus.Wait) {
 			rb.gravityScale = 0;
 				
@@ -60,6 +69,14 @@ public class PlayerScript : MonoBehaviour
         }
 
         // scoreText.text = score.ToString();
+=======
+        if(Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+        {
+            rb.velocity = Vector2.up * jump;
+        }
+
+        scoreText.text = score.ToString();
+>>>>>>> c5202ac07c85772808ccbcc188ea13625b66528f
 
     }
 
@@ -68,7 +85,11 @@ public class PlayerScript : MonoBehaviour
 
         if(col.tag == "coin")
         {
+<<<<<<< HEAD
             GameManager.instance.addScore();
+=======
+            score++;
+>>>>>>> c5202ac07c85772808ccbcc188ea13625b66528f
             Destroy(col.gameObject);
             int randomNumber = Random.Range(0, 2);
             if(randomNumber == 0)
@@ -85,10 +106,19 @@ public class PlayerScript : MonoBehaviour
             Instantiate(colorChanger, new Vector2(transform.position.x, transform.position.y + 11f), transform.rotation);
             return; 
         }
+<<<<<<< HEAD
         
         if(col.tag != currentColor )
         {
             GameManager.instance.gamestatus = GameManager.GameStatus.GameOver;
+=======
+
+        if(col.tag != currentColor)
+        {
+            Debug.Log("Game Over!");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            score = 0;
+>>>>>>> c5202ac07c85772808ccbcc188ea13625b66528f
         }
     }
 
